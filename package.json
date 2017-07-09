@@ -1,7 +1,7 @@
 {
   "name": "yelpcamp",
   "version": "11.0.0",
-  "description": "* Install and configure Mongoose * Setup comapground model * Use campground model inside of our routes",
+  "description": "YelpCamp v11",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -17,7 +17,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC"
