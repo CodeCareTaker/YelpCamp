@@ -4,8 +4,15 @@ var mongoose = require("mongoose")
 var campgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
-    description: String,
+    ownerName: String,
+    phoneNumber: String,
+    addressNumber: String,
+    streetName: String,
+    city: String,
+    province: String,
+    country: String,
     price: String,
+    description: String,
     submittedBy:{
              id: {
                  type: mongoose.Schema.Types.ObjectId,

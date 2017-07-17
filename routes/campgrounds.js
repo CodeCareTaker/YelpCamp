@@ -6,11 +6,43 @@ var middleware = require("../middleware");
 // ===================
 // CAMPGROUND ROUTES
 // ===================
-
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
-    //Get all campgrounds from DB
-    Campground.find({}, function(err, allCampgrounds){
+    //Get all campgrounds in descending order. Default option
+    Campground.find().sort({created: -1}).exec(function(err, allCampgrounds){
+        if(err){
+            req.flash("error", err.message);
+        } else {
+            res.render("campgrounds/index",{campgrounds:allCampgrounds}); 
+        }
+    });
+});
+
+router.get("Asc/", function(req, res){
+    //Get all campgrounds in ascending order
+    Campground.find().sort({created: 1}).exec(function(err, allCampgrounds){
+        if(err){
+            req.flash("error", err.message);
+        } else {
+            res.render("campgrounds/index",{campgrounds:allCampgrounds}); 
+        }
+    });
+});
+
+router.get("Alpha/", function(req, res){
+    //Get all campgrounds sorted from A-Z
+    Campground.find().sort({name: 1}).exec(function(err, allCampgrounds){
+        if(err){
+            req.flash("error", err.message);
+        } else {
+            res.render("campgrounds/index",{campgrounds:allCampgrounds}); 
+        }
+    });
+});
+
+router.get("AlphaDesc/", function(req, res){
+    //Get all campgrounds sorted from Z-A
+    Campground.find().sort({name: -1}).exec(function(err, allCampgrounds){
         if(err){
             req.flash("error", err.message);
         } else {
@@ -24,13 +56,20 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     // get data from form and add to campgrounds array
     var name = req.body.name;
     var image = req.body.image;
+    var ownerName = req.body.ownerName;
+    var phoneNumber = req.body.phoneNumber;
+    var addressNumber = req.body.addressNumber;
+    var streetName = req.body.streetName;
+    var city = req.body.city;
+    var province = req.body.province;
+    var country = req.body.country;
     var price = req.body.price;
     var desc = req.body.description;
     var submittedBy = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, image: image, price: price, description: desc, submittedBy: submittedBy};
+    var newCampground = {name: name, image: image, ownerName: ownerName, phoneNumber: phoneNumber, addressNumber: addressNumber, streetName: streetName, city: city, province: province, country: country, price: price, description: desc, submittedBy: submittedBy};
     // Create a new campground and save to DB
     
     Campground.create(newCampground, function(err, newlyCreated){
@@ -67,7 +106,13 @@ router.get("/:id", function(req, res) {
 //EDIT ROUTE
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
     Campground.findById(req.params.id, function(err, editCampground) {
-        res.render("campgrounds/edit", {campground: editCampground});
+        if(err){
+            req.flash("Campground not found");
+            console.log(err);
+            res.render("back");
+        } else {
+            res.render("campgrounds/edit", {campground: editCampground});
+        }
     });
 });
 
@@ -86,7 +131,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
 });
 
 //Delete Route
-router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res) {
+router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
     //remove campground from the website
     Campground.findByIdAndRemove(req.params.id, function(err) {
         if(err) {

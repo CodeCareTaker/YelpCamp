@@ -1,6 +1,13 @@
 body {
     background: gray;
 }
+.delete-form {
+    display: inline;
+}
+.newText {
+    color: white;
+    text-align: center;
+}
 .thumbnail img {
     width: 100%;
 }
@@ -9,7 +16,4 @@ body {
 }
 .thumbnail .caption-full{
     padding: 9px;
-}
-.delete-form{
-    display: inline;
 }
