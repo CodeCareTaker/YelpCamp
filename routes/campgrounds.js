@@ -6,6 +6,8 @@ var middleware = require("../middleware");
 // ===================
 // CAMPGROUND ROUTES
 // ===================
+
+
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
     //Get all campgrounds in descending order. Default option
@@ -85,7 +87,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 
 //NEW - show form to create new campground
 router.get("/new", middleware.isLoggedIn, function(req, res){
-   res.render("campgrounds/new.ejs"); 
+   res.render("campgrounds/new"); 
 });
 
 //SHOW - Show info about one campground
@@ -109,7 +111,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
         if(err){
             req.flash("Campground not found");
             console.log(err);
-            res.render("back");
+            res.redirect("back");
         } else {
             res.render("campgrounds/edit", {campground: editCampground});
         }

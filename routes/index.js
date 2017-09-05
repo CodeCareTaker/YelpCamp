@@ -12,13 +12,13 @@ router.get("/", function(req, res){
 // AUTH ROUTES
 // ===================
 
-//show register form
+//show registration form
 router.get("/register", function(req, res){
     res.render("register");
-})
+});
 
-//handling user sign in
-router.post("/register", function(req, res) {
+//handling user sign up
+router.post("/register", function(req, res){
     req.body.username
     req.body.password
     var newUser = new User({username: req.body.username});
@@ -35,6 +35,7 @@ router.post("/register", function(req, res) {
 })
 
 //Login Routes
+
 //render login form
 router.get("/login", function(req, res){
     res.render("login");

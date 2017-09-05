@@ -22,8 +22,6 @@ var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11";
 mongoose.connect(url);
 
 
-
-
 mongoose.Promise = global.Promise;
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
